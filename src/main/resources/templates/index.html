@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Logistics — Ship smarter, track everything</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-manifest fixed-top py-3">
+  <div class="container">
+    <a class="navbar-brand" href="/"><span class="brand-mark">AL</span>AI Logistics</a>
+    <button class="navbar-toggler border-0 text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
+      <i class="bi bi-list fs-2 text-light"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMain">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="#modules">Modules</a></li>
+        <li class="nav-item"><a class="nav-link" href="#ai">AI Engine</a></li>
+        <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Log in</a></li>
+        <li class="nav-item ms-lg-2 mt-2 mt-lg-0"><a class="btn btn-amber btn-sm" href="login">Get started</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="hero-eyebrow">Freight, decided by data</span>
+        <h1 class="hero-title mt-3">Move anything.<br><span class="accent">Track</span> everything.</h1>
+        <p class="hero-sub mt-3">AI Logistics connects customers, drivers and dispatch on one manifest — the AI engine recommends the right vehicle for every load and writes a plain-language status brief for every shipment in transit.</p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          <a href="book-shipment" class="btn btn-amber btn-lg"><i class="bi bi-box-seam me-2"></i>Book a shipment</a>
+          <a href="register?role=driver" class="btn btn-ghost-light btn-lg"><i class="bi bi-truck me-2"></i>Drive with us</a>
+        </div>
+        <div class="d-flex gap-4 mt-5 flex-wrap">
+          <div><div class="fs-4 fw-bold display-font">12,400+</div><div class="text-muted-light small mono">Shipments moved</div></div>
+          <div><div class="fs-4 fw-bold display-font">98.2%</div><div class="text-muted-light small mono">On-time delivery</div></div>
+          <div><div class="fs-4 fw-bold display-font">1,150</div><div class="text-muted-light small mono">Verified drivers</div></div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <svg viewBox="0 0 520 420" class="route-line" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 350 C 140 350, 120 240, 210 220 S 330 120, 300 60 S 420 30, 480 70" fill="none" stroke="#28345580" stroke-width="2"/>
+          <path class="dash" d="M40 350 C 140 350, 120 240, 210 220 S 330 120, 300 60 S 420 30, 480 70" fill="none" stroke="#22C1B4" stroke-width="2.5"/>
+          <circle class="node" cx="40" cy="350" r="8" fill="#FF8A3D"/>
+          <circle class="node" cx="210" cy="220" r="6" fill="#22C1B4"/>
+          <circle class="node" cx="300" cy="60" r="6" fill="#22C1B4"/>
+          <circle class="node" cx="480" cy="70" r="9" fill="#22C1B4"/>
+          <text x="10" y="378" fill="#c3cadf" font-family="IBM Plex Mono" font-size="12">PICKUP</text>
+          <text x="440" y="55" fill="#c3cadf" font-family="IBM Plex Mono" font-size="12">DROP</text>
+        </svg>
+        <div class="waybill mx-auto" style="max-width:340px;">
+          <div class="d-flex justify-content-between align-items-start">
+            <div><div class="tag-id">SHP-10255</div><h5 class="mt-1">Noida → Karol Bagh</h5></div>
+            <span class="badge-status badge-transit"><i class="bi bi-signpost-split me-1"></i>In Transit</span>
+          </div>
+          <div class="stitch"></div>
+          <div class="d-flex justify-content-between small">
+            <span class="text-ink-soft">Vehicle</span><span class="fw-semibold">Two Wheeler <i class="bi bi-bicycle ms-1"></i></span>
+          </div>
+          <div class="d-flex justify-content-between small mt-1">
+            <span class="text-ink-soft">AI confidence</span><span class="fw-semibold text-success">91%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- AI ENGINE -->
+<section class="section bg-navy-900" id="ai">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <span class="section-label">The AI engine</span>
+        <h2 class="mt-2">Two models, one manifest</h2>
+        <p class="text-muted-light">Every booking runs through a vehicle-matching model that reads weight and dimensions, and every tracking page is narrated by a summarization model that turns raw checkpoints into a plain-language brief.</p>
+        <div class="ai-box mt-4">
+          <span class="ai-tag"><i class="bi bi-cpu"></i>Vehicle prediction</span>
+          <p class="small mt-2 mb-0">Weight + volumetric size (L×W×H ÷ 5000) is compared against four vehicle classes, from two-wheeler to container truck, and returned with a confidence score.</p>
+        </div>
+        <div class="ai-box mt-3">
+          <span class="ai-tag"><i class="bi bi-chat-square-text"></i>Status summarization</span>
+          <p class="small mt-2 mb-0">Booking, pickup, transit and delivery events are condensed into a two-line brief so customers don't have to read a raw event log.</p>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="panel">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="mono text-teal small"><i class="bi bi-terminal me-1"></i>ai/predict-vehicle</span>
+            <span class="chip">live demo</span>
+          </div>
+          <div class="row g-3">
+          	<form action="PredictVehicle" method="get">
+	            <div class="col-6"><label class="form-label">Weight (kg)</label><input id="demoWeight" name="weight" type="number" class="form-control" required></div>
+	            <div class="col-2"><label class="form-label">L (cm)</label><input id="demoL" name="length" type="number" class="form-control" required></div>
+	            <div class="col-2"><label class="form-label">W (cm)</label><input id="demoW" name="width" type="number" class="form-control" required></div>
+	            <div class="col-2"><label class="form-label">H (cm)</label><input id="demoH" name="height" type="number" class="form-control" required></div>
+      			<button class="btn btn-teal btn-sm mt-3" id="demoPredictBtn"><i class="bi bi-magic me-1"></i>Predict vehicle</button>
+      		</form>
+          </div>
+          <div class="divider-dash my-3"></div>
+          <div id="demoResult" class="d-flex align-items-center gap-3">
+            <div class="stat-icon" style="background:rgba(34,193,180,.15); color:var(--teal);"><i class="bi bi-truck-front fs-5"></i></div>
+            <div>
+              <div class="fw-bold" id="demoVehicleName">
+              	<p th:if="${result}" th:text="${result}"></p>
+              </div>
+              <div class="small text-muted-light" id="demoVehicleNote">Ideal for household goods, cartons &amp; mid-size cargo.</div>
+            </div>
+            <div class="ms-auto text-end">
+              <div class="mono text-teal fw-bold" id="demoConfidence">88%</div>
+              <div class="small text-muted-light">confidence</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="section" id="modules">
+  <div class="container">
+    <span class="section-label">Three roles, one manifest</span>
+    <h2 class="mt-2 mb-5" style="max-width:600px;">Built for everyone moving the shipment forward</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="module-card">
+          <div class="module-icon"><i class="bi bi-person-badge"></i></div>
+          <h5 class="display-font">Customer</h5>
+          <p class="text-muted-light small mb-3">Book, track and manage every shipment from one dashboard.</p>
+          <ul class="list-unstyled small text-muted-light d-flex flex-column gap-2">
+            <li><i class="bi bi-check2 text-teal me-2"></i>Register &amp; log in</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>Book shipment with AI vehicle match</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>View &amp; track live status</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>Cancel a shipment</li>
+          </ul>
+          <a href="book-shipment" class="btn btn-outline-amber btn-sm mt-3">Ship as customer</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="module-card">
+          <div class="module-icon"><i class="bi bi-truck"></i></div>
+          <h5 class="display-font">Driver</h5>
+          <p class="text-muted-light small mb-3">See assigned loads and keep customers updated in real time.</p>
+          <ul class="list-unstyled small text-muted-light d-flex flex-column gap-2">
+            <li><i class="bi bi-check2 text-teal me-2"></i>Log in after admin approval</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>View assigned shipments</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>Update live location</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>Mark delivered &amp; upload proof</li>
+          </ul>
+          <a href="register?role=driver" class="btn btn-outline-amber btn-sm mt-3">Register as driver</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="module-card">
+          <div class="module-icon"><i class="bi bi-shield-check"></i></div>
+          <h5 class="display-font">Admin</h5>
+          <p class="text-muted-light small mb-3">Approve drivers and keep an eye on the whole network.</p>
+          <ul class="list-unstyled small text-muted-light d-flex flex-column gap-2">
+            <li><i class="bi bi-check2 text-teal me-2"></i>Approve / reject drivers</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>View &amp; delete driver records</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>Daily shipment dashboard</li>
+            <li><i class="bi bi-check2 text-teal me-2"></i>Network-wide oversight</li>
+          </ul>
+          <a href="login?role=admin" class="btn btn-outline-amber btn-sm mt-3">Admin log in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="container">
+    <span class="section-label">Process</span>
+    <h2 class="mt-2 mb-5">From booking to doorstep</h2>
+    <div class="row g-4">
+      <div class="col-md-3 col-6">
+        <div class="mono text-amber small mb-2">01 / BOOK</div>
+        <p class="text-muted-light small">Customer enters pickup, drop and goods details — AI recommends the vehicle instantly.</p>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="mono text-amber small mb-2">02 / ASSIGN</div>
+        <p class="text-muted-light small">An approved driver is matched to the shipment automatically.</p>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="mono text-amber small mb-2">03 / TRACK</div>
+        <p class="text-muted-light small">Driver updates location as the load moves; AI narrates the status for the customer.</p>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="mono text-amber small mb-2">04 / DELIVER</div>
+        <p class="text-muted-light small">Driver marks delivered and uploads proof — the manifest closes out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section bg-navy-900">
+  <div class="container text-center">
+    <h2>Ready to move your first shipment?</h2>
+    <p class="text-muted-light mb-4">Create an account as a customer or apply to drive — approval takes minutes.</p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="register" class="btn btn-amber btn-lg">Create free account</a>
+      <a href="login" class="btn btn-ghost-light btn-lg">I already have an account</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-manifest">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <a class="navbar-brand" href="index.html"><span class="brand-mark">AL</span>AI Logistics</a>
+    <div class="small">© 2026 AI Logistics. Demo frontend — no real shipments are moved.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/store.js"></script>
+
+<script src="assets/js/app.js"></script>
+
+</body>
+</html>

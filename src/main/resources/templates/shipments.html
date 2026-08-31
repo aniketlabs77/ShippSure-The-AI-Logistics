@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Shipments — AI Logistics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <aside class="app-sidebar" id="appSidebar">
+    <a href="./index.html" class="navbar-brand mb-4 d-inline-flex"><span class="brand-mark">AL</span>AI Logistics</a>
+    <div class="sidebar-section-label">Customer</div>
+    <a href="dashboard.html" class="sidebar-link"><i class="bi bi-grid-1x2"></i>Dashboard</a>
+    <a href="book-shipment.html" class="sidebar-link"><i class="bi bi-box-seam"></i>Book Shipment</a>
+    <a href="shipments.html" class="sidebar-link active"><i class="bi bi-list-ul"></i>My Shipments</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="#" class="sidebar-link logout-link"><i class="bi bi-box-arrow-right"></i>Log out</a>
+  </aside>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-sm btn-ghost-light d-lg-none" id="sidebarToggle"><i class="bi bi-list"></i></button>
+        <div class="fw-semibold">My shipments</div>
+      </div>
+      <a href="book-shipment.html" class="btn btn-amber btn-sm"><i class="bi bi-plus-lg me-1"></i>Book shipment</a>
+    </div>
+
+    <div class="app-content">
+      <div class="d-flex flex-wrap gap-2 mb-3" id="filterBar">
+        <button class="btn btn-sm btn-ghost-light active" data-filter="all">All</button>
+        <button class="btn btn-sm btn-ghost-light" data-filter="pending">Pending</button>
+        <button class="btn btn-sm btn-ghost-light" data-filter="in_transit">In Transit</button>
+        <button class="btn btn-sm btn-ghost-light" data-filter="delivered">Delivered</button>
+        <button class="btn btn-sm btn-ghost-light" data-filter="cancelled">Cancelled</button>
+      </div>
+
+      <div class="panel">
+        <div class="table-responsive">
+          <table class="table table-manifest align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Shipment</th><th>Route</th><th>Goods</th><th>Vehicle</th><th>Status</th><th>Booked</th><th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="shipmentRows"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty-state d-none"><i class="bi bi-inbox"></i>No shipments match this filter.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Cancel confirm modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content" style="background:var(--navy-800); color:var(--paper); border:1px solid var(--line-soft);">
+      <div class="modal-header border-0">
+        <h5 class="modal-title">Cancel shipment?</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted-light mb-0">This will cancel <span class="mono" id="cancelShipmentId">—</span>. This action can't be undone.</p>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-ghost-light btn-sm" data-bs-dismiss="modal">Keep shipment</button>
+        <button type="button" class="btn btn-danger-soft btn-sm" id="confirmCancelBtn">Cancel shipment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/js/store.js"></script>
+<script src="./assets/js/ai.js"></script>
+<script src="./assets/js/app.js"></script>
+<script>
+  const session = Store.requireRole('customer');
+  let activeFilter = 'all';
+  let pendingCancelId = null;
+  let cancelModal;
+
+  function render(){
+    const all = Store.listShipmentsByCustomer(session.id);
+    const list = activeFilter === 'all' ? all : all.filter(s => s.status === activeFilter);
+    document.getElementById('shipmentRows').innerHTML = list.map(s => {
+      const meta = statusMeta(s.status);
+      const canCancel = s.status === 'pending' || s.status === 'in_transit';
+      return `<tr>
+        <td class="mono">${s.id}</td>
+        <td>${s.pickup.split(',')[0]} → ${s.drop.split(',')[0]}</td>
+        <td class="small text-muted-light">${s.goods}</td>
+        <td><span class="chip"><i class="bi bi-truck-front me-1"></i>${s.vehicle}</span></td>
+        <td><span class="badge-status ${meta.badge}"><i class="bi ${meta.icon} me-1"></i>${meta.label}</span></td>
+        <td class="small text-muted-light">${fmtDateShort(s.createdAt)}</td>
+        <td class="text-end">
+          <a href="track.html?id=${s.id}" class="btn btn-sm btn-ghost-light"><i class="bi bi-geo-alt"></i> Track</a>
+          ${canCancel ? `<button class="btn btn-sm btn-danger-soft ms-1 cancel-btn" data-id="${s.id}"><i class="bi bi-x-lg"></i></button>` : ''}
+        </td>
+      </tr>`;
+    }).join('');
+    document.getElementById('emptyState').classList.toggle('d-none', list.length > 0);
+
+    document.querySelectorAll('.cancel-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        pendingCancelId = btn.dataset.id;
+        document.getElementById('cancelShipmentId').textContent = pendingCancelId;
+        cancelModal.show();
+      });
+    });
+  }
+
+  if(session){
+    paintUserChip('.user-name-slot', '.user-chip-slot');
+    wireLogout();
+    initSidebarToggle();
+    cancelModal = new bootstrap.Modal(document.getElementById('cancelModal'));
+
+    document.querySelectorAll('#filterBar button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#filterBar button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        render();
+      });
+    });
+
+    document.getElementById('confirmCancelBtn').addEventListener('click', () => {
+      Store.cancelShipment(pendingCancelId);
+      cancelModal.hide();
+      toast('Shipment ' + pendingCancelId + ' cancelled.', 'amber');
+      render();
+    });
+
+    render();
+  }
+</script>
+</body>
+</html>

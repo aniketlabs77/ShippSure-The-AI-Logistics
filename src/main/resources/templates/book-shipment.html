@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Book Shipment — AI Logistics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <aside class="app-sidebar" id="appSidebar">
+    <a href="customer-dashboard" class="navbar-brand mb-4 d-inline-flex"><span class="brand-mark">AL</span>AI Logistics</a>
+    <div class="sidebar-section-label">Customer</div>
+    <a href="customer-dashboard" class="sidebar-link"><i class="bi bi-grid-1x2"></i>Dashboard</a>
+    <a href="book-shipment" class="sidebar-link active"><i class="bi bi-box-seam"></i>Book Shipment</a>
+    <a href="shipments" class="sidebar-link"><i class="bi bi-list-ul"></i>My Shipments</a>
+    <div class="sidebar-section-label">Account</div>
+    <a href="logout" class="sidebar-link logout-link"><i class="bi bi-box-arrow-right"></i>Log out</a>
+  </aside>
+
+  <main class="app-main">
+    <div class="app-topbar">
+      <div class="d-flex align-items-center gap-3">
+        <button class="btn btn-sm btn-ghost-light d-lg-none" id="sidebarToggle"><i class="bi bi-list"></i></button>
+        <div class="fw-semibold">Book a shipment</div>
+      </div>
+      <div class="avatar-chip user-chip-slot">—</div>
+    </div>
+
+    <div class="app-content">
+      <div class="row g-4">
+        <div class="col-lg-7">
+          <div class="panel">
+            <h5 class="mb-3">Shipment details</h5>
+            <form id="bookForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Pickup address</label>
+                  <input type="text" class="form-control" id="pickup" placeholder="Sector 62, Noida, UP" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Drop address</label>
+                  <input type="text" class="form-control" id="drop" placeholder="Connaught Place, New Delhi" required>
+                </div>
+              </div>
+              <div class="mt-3">
+                <label class="form-label">Goods description</label>
+                <input type="text" class="form-control" id="goods" placeholder="e.g. Packaged electronics (cartons)" required>
+              </div>
+
+              <div class="divider-dash my-4"></div>
+              <h6 class="mb-3">Weight &amp; dimensions <span class="chip">used by AI to pick your vehicle</span></h6>
+              <div class="row g-3">
+                <div class="col-md-3 col-6">
+                  <label class="form-label">Weight (kg)</label>
+                  <input type="number" min="0.1" step="0.1" class="form-control" id="weight" value="50" required>
+                </div>
+                <div class="col-md-3 col-6">
+                  <label class="form-label">Length (cm)</label>
+                  <input type="number" min="1" class="form-control" id="length" value="60" required>
+                </div>
+                <div class="col-md-3 col-6">
+                  <label class="form-label">Width (cm)</label>
+                  <input type="number" min="1" class="form-control" id="width" value="40" required>
+                </div>
+                <div class="col-md-3 col-6">
+                  <label class="form-label">Height (cm)</label>
+                  <input type="number" min="1" class="form-control" id="height" value="35" required>
+                </div>
+              </div>
+
+              <button type="button" id="predictBtn" class="btn btn-teal mt-4"><i class="bi bi-magic me-1"></i>Get AI vehicle recommendation</button>
+
+              <div id="predictionBox" class="ai-box mt-4 d-none">
+                <span class="ai-tag"><i class="bi bi-cpu"></i>AI recommendation</span>
+                <div class="d-flex align-items-center gap-3 mt-3">
+                  <div class="stat-icon" style="background:rgba(34,193,180,.15); color:var(--teal);"><i class="bi bi-truck-front fs-5" id="predIcon"></i></div>
+                  <div>
+                    <div class="fw-bold" id="predVehicle">—</div>
+                    <div class="small text-muted-light" id="predNote">—</div>
+                  </div>
+                  <div class="ms-auto text-end">
+                    <div class="mono text-teal fw-bold" id="predConfidence">—</div>
+                    <div class="small text-muted-light">confidence</div>
+                  </div>
+                </div>
+                <div class="small text-muted-light mt-2" id="predDetail"></div>
+              </div>
+
+              <button type="submit" class="btn btn-amber w-100 mt-4" id="submitBtn" disabled>
+                <i class="bi bi-send-check me-1"></i>Confirm &amp; book shipment
+              </button>
+              <p class="small text-muted-light text-center mt-2 mb-0">Run the AI recommendation first — it sets the vehicle for this booking.</p>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="panel">
+            <h6 class="mb-3"><i class="bi bi-info-circle me-1 text-teal"></i>How vehicle matching works</h6>
+            <p class="small text-muted-light">We compare your actual weight against the <em>volumetric weight</em> of your parcel (L×W×H in cm, divided by 5000) and route it to the smallest vehicle class that comfortably fits.</p>
+            <ul class="list-unstyled small text-muted-light d-flex flex-column gap-2 mt-3">
+              <li><i class="bi bi-bicycle me-2 text-teal"></i>Two Wheeler — up to 20 kg</li>
+              <li><i class="bi bi-truck-front me-2 text-teal"></i>Mini Truck — up to 750 kg</li>
+              <li><i class="bi bi-truck me-2 text-teal"></i>Van — up to 1,000 kg, bulkier loads</li>
+              <li><i class="bi bi-truck-flatbed me-2 text-teal"></i>Container Truck — industrial / palletized freight</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./assets/js/store.js"></script>
+<script src="./assets/js/ai.js"></script>
+<script src="./assets/js/app.js"></script>
+
+</body>
+</html>

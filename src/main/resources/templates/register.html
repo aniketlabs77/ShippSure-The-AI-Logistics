@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create account — AI Logistics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="auth-visual">
+    <div style="max-width:420px;">
+      <span class="hero-eyebrow">Join the manifest</span>
+      <h2 class="mt-3 text-paper" style="color:var(--paper);">One account,<br>every shipment.</h2>
+      <p class="text-muted-light mt-3">Customers get AI vehicle matching on every booking. Drivers get a clean queue of assigned loads once admin approves their profile.</p>
+      <div class="waybill mt-5">
+        <div class="d-flex justify-content-between align-items-start">
+          <div><div class="tag-id">SHP-10261</div><h5 class="mt-1">Greater Noida → Gurugram</h5></div>
+          <span class="badge-status badge-pending"><i class="bi bi-hourglass-split me-1"></i>Pending</span>
+        </div>
+        <div class="stitch"></div>
+        <div class="small text-ink-soft">AI suggested vehicle</div>
+        <div class="fw-semibold"><i class="bi bi-truck-flatbed me-1"></i>Container Truck</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <a href="index.html" class="navbar-brand d-inline-flex mb-4"><span class="brand-mark">AL</span>AI Logistics</a>
+      <h3>Create your account</h3>
+      <p class="text-muted-light small mb-4">Register as a customer to book shipments, or apply as a driver.</p>
+
+      <ul class="nav nav-pills mb-4 gap-2" id="roleTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active btn-ghost-light" id="tab-customer" data-bs-toggle="pill" data-bs-target="#pane-customer" type="button">
+            <i class="bi bi-person-badge me-1"></i>Customer
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link btn-ghost-light" id="tab-driver" data-bs-toggle="pill" data-bs-target="#pane-driver" type="button">
+            <i class="bi bi-truck me-1"></i>Driver
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- CUSTOMER REGISTER -->
+        <div class="tab-pane fade show active" id="pane-customer">
+          <form id="customerForm" novalidate>
+            <div class="mb-3">
+              <label class="form-label">Full name</label>
+              <input type="text" class="form-control" id="cName" placeholder="Ritika Sharma" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-control" id="cEmail" placeholder="you@example.com" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone number</label>
+              <input type="tel" class="form-control" id="cPhone" placeholder="98765 00000" required>
+            </div>
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" id="cPassword" minlength="6" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label">Confirm password</label>
+                <input type="password" class="form-control" id="cPassword2" minlength="6" required>
+              </div>
+            </div>
+            <div id="cError" class="text-danger small mt-3 d-none"></div>
+            <button type="submit" class="btn btn-amber w-100 mt-4">Create customer account</button>
+          </form>
+        </div>
+
+        <!-- DRIVER REGISTER -->
+        <div class="tab-pane fade" id="pane-driver">
+          <div class="ai-box mb-3">
+            <span class="ai-tag"><i class="bi bi-info-circle"></i>Approval required</span>
+            <p class="small mt-2 mb-0">New driver accounts stay pending until an admin approves them. You'll be able to log in once approved.</p>
+          </div>
+          <form id="driverForm" novalidate>
+            <div class="mb-3">
+              <label class="form-label">Full name</label>
+              <input type="text" class="form-control" id="dName" placeholder="Arjun Mehta" required>
+            </div>
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="form-label">Email address</label>
+                <input type="email" class="form-control" id="dEmail" placeholder="you@example.com" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label">Phone number</label>
+                <input type="tel" class="form-control" id="dPhone" placeholder="98765 00000" required>
+              </div>
+            </div>
+            <div class="row g-3 mt-0">
+              <div class="col-6">
+                <label class="form-label">Vehicle type</label>
+                <select class="form-select" id="dVehicle" required>
+                  <option value="Two Wheeler">Two Wheeler</option>
+                  <option value="Mini Truck">Mini Truck</option>
+                  <option value="Van">Van</option>
+                  <option value="Container Truck">Container Truck</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label">License number</label>
+                <input type="text" class="form-control" id="dLicense" placeholder="DL-04-2021-0093211" required>
+              </div>
+            </div>
+            <div class="row g-3 mt-0">
+              <div class="col-6">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" id="dPassword" minlength="6" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label">Confirm password</label>
+                <input type="password" class="form-control" id="dPassword2" minlength="6" required>
+              </div>
+            </div>
+            <div id="dError" class="text-danger small mt-3 d-none"></div>
+            <button type="submit" class="btn btn-teal w-100 mt-4">Submit driver application</button>
+          </form>
+        </div>
+      </div>
+
+      <p class="text-muted-light small mt-4 text-center">Already have an account? <a href="login.html" class="text-amber">Log in</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/ai.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+  // preselect driver tab if ?role=driver
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('role') === 'driver'){
+    new bootstrap.Tab(document.getElementById('tab-driver')).show();
+  }
+
+  document.getElementById('customerForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const errBox = document.getElementById('cError');
+    errBox.classList.add('d-none');
+    const name = document.getElementById('cName').value.trim();
+    const email = document.getElementById('cEmail').value.trim();
+    const phone = document.getElementById('cPhone').value.trim();
+    const pw = document.getElementById('cPassword').value;
+    const pw2 = document.getElementById('cPassword2').value;
+    if(pw !== pw2){ errBox.textContent = 'Passwords do not match.'; errBox.classList.remove('d-none'); return; }
+    const res = Store.registerCustomer({ name, email, phone, password: pw });
+    if(!res.ok){ errBox.textContent = res.message; errBox.classList.remove('d-none'); return; }
+    toast('Account created. Welcome, ' + name.split(' ')[0] + '!');
+    setTimeout(() => window.location.href = 'customer/dashboard.html', 700);
+  });
+
+  document.getElementById('driverForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const errBox = document.getElementById('dError');
+    errBox.classList.add('d-none');
+    const name = document.getElementById('dName').value.trim();
+    const email = document.getElementById('dEmail').value.trim();
+    const phone = document.getElementById('dPhone').value.trim();
+    const vehicle = document.getElementById('dVehicle').value;
+    const license = document.getElementById('dLicense').value.trim();
+    const pw = document.getElementById('dPassword').value;
+    const pw2 = document.getElementById('dPassword2').value;
+    if(pw !== pw2){ errBox.textContent = 'Passwords do not match.'; errBox.classList.remove('d-none'); return; }
+    const res = Store.registerDriver({ name, email, phone, vehicle, license, password: pw });
+    if(!res.ok){ errBox.textContent = res.message; errBox.classList.remove('d-none'); return; }
+    toast('Application submitted — pending admin approval.', 'amber');
+    setTimeout(() => window.location.href = 'login.html', 900);
+  });
+</script>
+</body>
+</html>
