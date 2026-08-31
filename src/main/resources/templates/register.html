@@ -130,7 +130,7 @@
         </div>
       </div>
 
-      <p class="text-muted-light small mt-4 text-center">Already have an account? <a href="login.html" class="text-amber">Log in</a></p>
+      <p class="text-muted-light small mt-4 text-center">Already have an account? <a href="login" class="text-amber">Log in</a></p>
     </div>
   </div>
 </div>
@@ -177,7 +177,7 @@
     const res = Store.registerDriver({ name, email, phone, vehicle, license, password: pw });
     if(!res.ok){ errBox.textContent = res.message; errBox.classList.remove('d-none'); return; }
     toast('Application submitted — pending admin approval.', 'amber');
-    setTimeout(() => window.location.href = 'login.html', 900);
+    setTimeout(() => window.location.href = 'login', 900);
   });
 </script>
 </body>
